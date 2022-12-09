@@ -42,21 +42,51 @@ class Game
 
   attr_reader :code
 
-  def initialize(code = Game.generate_code)
+  def initialize(code)
     @code = code
   end
 
   def self.generate_code
-    code = Array.new(4) {rand(6) + 1}
+    @@answer = Array.new(4) {rand(6) + 1}
+  end
+  
+  def compare()
+    @@temp_answer = @@answer
+    look_black_pins()
+    look_white_pins()
+    @@temp_answer = @@temp_answer - @@temp_answer.join.scan(/\d/).map(&:to_i)
+    p @@temp_answer.sort.reverse
+  end
+
+  def look_black_pins()
+    @@temp_answer.each_index { |i|
+      if @@temp_answer[i] == @code[i]
+        @@temp_answer[i] = "\u2981" 
+        @code[i] = nil
+      end
+    }
+  end
+
+  def look_white_pins()
+    @code.each_index { |i| 
+      @@temp_answer.each_index { |j|
+        if @@temp_answer[j] == @code[i] 
+          @@temp_answer[j] = "\u25e6" 
+          @code[i] = nil
+        end
+      }
+    }
   end
 end
 
 while(true)
-  answer = Game.new
+  Game.generate_code
   print "Enter your guess of four numbers, from 1 to 6: "
   guess = gets.chomp.gsub(/\s/, "")
   until (guess.length == 4 && guess.scan(/[\D7890]/).empty?)
     print "Wrong input, enter your guess of four numbers, from 1 to 6: "
     guess = gets.chomp.gsub(/\s/, "")
   end
+  code = Game.new(guess.scan(/\d/).map(&:to_i))
+  code.compare
 end
