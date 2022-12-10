@@ -67,7 +67,7 @@ class Game
     when 3
       @code = code
     when 4
-      # @
+      @code = @@codes[rand(@@codes.length)]
     end
   end
 
@@ -190,7 +190,7 @@ while(true)
 
   if win
     puts "You win!! Wanna play again? Press 'Y' for yes or any other key for no:" if game_mode == 1
-    puts "Computer won! Wanna play again? Press 'Y' for yes or any other key for no:" if game_mode == 2
+    puts "Computer won! Wanna play again? Press 'Y' for yes or any other key for no:" if game_mode != 1
   else
     puts "You lost... Wanna play again? Press 'Y' for yes or any other key for no:" if game_mode == 1
     puts "Computer lost! Wanna play again? Press 'Y' for yes or any other key for no:" if game_mode == 2
