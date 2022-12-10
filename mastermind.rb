@@ -159,6 +159,7 @@ while(true)
     Game.generate_code
     while(total_guesses < max_guesses)
       guess = Game.new
+      puts "Guess number #{total_guesses + 1}\n"
       guess.print_colors
       result = guess.compare
       guess.print_result(result)
@@ -167,6 +168,7 @@ while(true)
         break
       end
       total_guesses += 1
+      puts "You have #{max_guesses - total_guesses} remaining!\n\n\n"
     end
   when 2
     Game.new(game_mode)
@@ -174,6 +176,7 @@ while(true)
     game_mode = 3
     while(total_guesses < max_guesses)
       guess = Game.new(game_mode, [1, 2, 3, 3])
+      puts "Guess number #{total_guesses + 1}\n"
       game_mode = 4
       guess.print_colors
       result = guess.compare
@@ -185,6 +188,8 @@ while(true)
         guess.check_scenarios(result)
       end
       total_guesses += 1
+      puts "You have #{max_guesses - total_guesses} guesses remaining!\n\n\n"
+      sleep(1)
     end
   end
 
